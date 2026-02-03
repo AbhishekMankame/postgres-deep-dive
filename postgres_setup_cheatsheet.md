@@ -106,3 +106,26 @@ docker ps -a               # List all containers
 docker logs pg-sandbox     # Check container logs
 
 </pre>
+
+## Closing Setup
+
+### 1.Exit psql
+- \q -> This quits psql and brings you back to your normal terminal
+
+### 2.Stop the Docker container
+Since we used `docker-compose`, run:
+<pre>docker-compose down</pre>
+
+- Stops the container
+- Removes ir from running state (data is persisted in the Docker volume you create)
+<pre>docker-compose stop</pre>
+
+- To start it again later:
+<pre>docker-compose start</pre>
+
+### 3.Verify everything is stopped
+<pre>docker ps</pre>
+
+- No `pg-sandbox` container should appear
+- If you want to see all container (even stopped ones):
+<pre>docker ps -a</pre>
