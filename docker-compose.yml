@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: pg-sandbox
+    environment:
+      POSTGRES_USER: codespace
+      POSTGRES_PASSWORD: codespace
+      POSTGRES_DB: postgres_sandbox
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
