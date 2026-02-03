@@ -28,3 +28,81 @@
 <pre>\dt</pre>
 
 - Shows all tables in the current database
+
+### 6.Create tables
+<pre>
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    email VARCHAR(100)
+);
+
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    price NUMERIC(10,2)
+);
+
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    product_id INT REFERENCES products(id),
+    quantity INT,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+</pre>
+
+### 7.Insert sample data
+<pre>
+
+INSERT INTO users (name, email) VALUES
+('Alice', 'alice@example.com'),
+('Bob', 'bob@example.com');
+
+INSERT INTO products (name, price) VALUES
+('Laptop', 1000),
+('Phone', 500);
+
+INSERT INTO orders (user_id, product_id, quantity) VALUES
+(1, 1, 1),
+(2, 2, 2);
+
+</pre>
+
+### 8.Query data
+<pre>
+
+SELECT * FROM users;
+SELECT * FROM products;
+SELECT * FROM orders;
+
+-- Join example
+SELECT o.id, u.name AS user_name, p.name AS product_name, o.quantity
+FROM orders o
+JOIN users u ON o.user_id = u.id
+JOIN products p ON o.product_id = p.id;
+
+</pre>
+
+### 9.Run SQL files
+<pre>
+
+psql -h localhost -p 5433 -U codespace -d postgres_sandbox -f sql/create_tables.sql
+psql -h localhost -p 5433 -U codespace -d postgres_sandbox -f sql/insert_data.sql
+
+</pre>
+
+- -f -> executes all commands in a file
+
+### 10.Docker commands for sandbox
+<pre>
+
+docker-compose up -d       # Start Postgres container
+docker-compose down        # Stop & remove container
+docker ps                  # List running containers
+docker ps -a               # List all containers
+docker logs pg-sandbox     # Check container logs
+
+</pre>
